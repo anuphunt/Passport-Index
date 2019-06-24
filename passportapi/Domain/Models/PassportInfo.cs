@@ -8,6 +8,6 @@ namespace passportapi.Domain.Models
         public int Id { get; set; }
         public string Passport { get; set; }
         public string Destination { get; set; }
-        public int Value { get; set; }
+        public Enumerations Value { get; set; }
     }
 }
