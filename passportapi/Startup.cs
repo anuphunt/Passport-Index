@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +34,10 @@ namespace passportapi
 
             services.AddScoped<IPassportInfoRepository, PassportInfoRepository>();
             services.AddScoped<IPassportInfoService, PassportInfoService>();
+            services.AddScoped<IUnitofWork, UnitOfWork>();
+            services.AddAutoMapper(typeof(Startup));
+
+
 
         }
 
@@ -50,7 +55,16 @@ namespace passportapi
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller}/{action}/{id?}");
+
+                routes.MapRoute(
+                    name: "twoCountries",
+                    template: "{controller}/{action}/{source}/{destination}");
+            });
         }
     }
 }
