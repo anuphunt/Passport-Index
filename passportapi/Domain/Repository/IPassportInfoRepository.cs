@@ -14,5 +14,6 @@ namespace passportapi.Domain.Repository
         void Update(PassportInfo passportInfo);
         void Remove(PassportInfo passportInfo);
         Task<PassportInfo> GetBySourceAndDestination(string source, string destination);
+        Task<IEnumerable<PassportInfo>> GetBySingleCountry(string country);
     }
 }

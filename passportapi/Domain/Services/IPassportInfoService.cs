@@ -18,5 +18,7 @@ namespace passportapi.Domain.Services
         Task<PassportInfoResponse> DeleteAsync(int id);
 
         Task<PassportInfo> GetBySourceAndDestination(string sourceCountry, string destinationCountry);
+
+        Task<IEnumerable<PassportInfo>> GetBySingleCountry(string country);
     }
 }

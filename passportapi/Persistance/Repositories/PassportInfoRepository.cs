@@ -46,5 +46,12 @@ namespace passportapi.Persistance.Repositories
             var result = await _context.PassportInfo.SingleOrDefaultAsync(g => g.Passport == source && g.Destination == destination);
             return result;
         }
+
+        public async Task<IEnumerable<PassportInfo>> GetBySingleCountry(string country)
+        {
+            var result = await _context.PassportInfo.Where(g => g.Passport == country).ToListAsync();
+            return result;
+        }
     }
 }
+    

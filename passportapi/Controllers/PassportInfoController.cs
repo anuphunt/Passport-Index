@@ -35,7 +35,7 @@ namespace passportapi.Controllers
             return resources;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("GetById/{id}")]
         public async Task<PassportInfoResource> GetById(int id)
         {
             var passportInfo = await _passportInfoService.FindByIdAsync(id);
@@ -111,7 +111,7 @@ namespace passportapi.Controllers
         public async Task<IEnumerable<PassportInfoResource>> GetBySingleCountry(string country)
         {
             var passportInfo = await _passportInfoService.GetBySingleCountry(country);
-            var resource = _mapper.Map<PassportInfo, PassportInfoResource>(passportInfo);
+            var resource = _mapper.Map<IEnumerable<PassportInfo>, IEnumerable<PassportInfoResource>>(passportInfo);
 
             return resource;
         }

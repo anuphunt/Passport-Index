@@ -92,5 +92,10 @@ namespace passportapi.Services
         {
             return await _passportInfoRepository.GetBySourceAndDestination(sourceCountry, destinationCountry);
         }
+
+        public async Task<IEnumerable<PassportInfo>> GetBySingleCountry(string country)
+        {
+            return await _passportInfoRepository.GetBySingleCountry(country);
+        }
     }
 }
