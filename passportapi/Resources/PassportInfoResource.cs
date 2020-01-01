@@ -10,6 +10,6 @@ namespace passportapi.Resources
     {
         public string Passport { get; set; }
         public string Destination { get; set; }
-        public string VisaStatus { get; set; }
+        public int Code { get; set; }
     }
 }

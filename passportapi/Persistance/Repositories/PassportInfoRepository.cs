@@ -11,45 +11,51 @@ namespace passportapi.Persistance.Repositories
 {
     public class PassportInfoRepository : BaseRepository, IPassportInfoRepository
     {
-        public PassportInfoRepository(AppDbContext context) : base(context)
+        public PassportInfoRepository(PassportContext context) : base(context)
         {
 
         }
 
-        public async Task<IEnumerable<PassportInfo>> ListAsync()
+        public async Task<IEnumerable<PassportIndex>> ListAsync()
         {
-            return await _context.PassportInfo.ToListAsync();
+            return await _context.PassportIndex.ToListAsync();
         }
 
-        public async Task AddAsync(PassportInfo passportinfo)
+        public async Task AddAsync(PassportIndex passportinfo)
         {
-           await _context.PassportInfo.AddAsync(passportinfo);
+           await _context.PassportIndex.AddAsync(passportinfo);
         }
 
-        public async Task<PassportInfo> FindByIdAsync(int id)
+        public async Task<PassportIndex> FindByIdAsync(int id)
         {
-           return await _context.PassportInfo.FindAsync(id);
+           return await _context.PassportIndex.FindAsync(id);
         }
 
-        public void Update(PassportInfo passportInfo)
+        public void Update(PassportIndex passportIndex)
         {
-            _context.PassportInfo.Update(passportInfo);
+            _context.PassportIndex.Update(passportIndex);
         }
 
-        public void Remove(PassportInfo passportInfo)
+        public void Remove(PassportIndex passportIndex)
         {
-            _context.PassportInfo.Remove(passportInfo);
+            _context.PassportIndex.Remove(passportIndex);
         }
 
-        public async Task<PassportInfo> GetBySourceAndDestination(string source, string destination)
+        public async Task<PassportIndex> GetBySourceAndDestination(string source, string destination)
         {
-            var result = await _context.PassportInfo.SingleOrDefaultAsync(g => g.Passport == source && g.Destination == destination);
+            var result = await _context.PassportIndex.SingleOrDefaultAsync(g => g.Passport == source && g.Destination == destination);
             return result;
         }
 
-        public async Task<IEnumerable<PassportInfo>> GetBySingleCountry(string country)
+        public async Task<IEnumerable<PassportIndex>> GetBySingleCountry(string country)
         {
-            var result = await _context.PassportInfo.Where(g => g.Passport == country).ToListAsync();
+            var result = await _context.PassportIndex.Where(g => g.Passport == country).ToListAsync();
+            return result;
+        }
+
+        public async Task<IEnumerable<PassportIndex>> GetByCountryAndCode(string country, int code)
+        {
+            var result = await _context.PassportIndex.Where(g => g.Passport == country && g.Code == code).ToListAsync();
             return result;
         }
     }

@@ -9,16 +9,18 @@ namespace passportapi.Domain.Services
 {
     public interface IPassportInfoService
     {
-        Task<IEnumerable<PassportInfo>> ListAsync();
-        Task<PassportInfo> FindByIdAsync(int id);
-        Task<PassportInfoResponse> SaveAsync(PassportInfo passportinfo);
+        Task<IEnumerable<PassportIndex>> ListAsync();
+        Task<PassportIndex> FindByIdAsync(int id);
+        Task<PassportInfoResponse> SaveAsync(PassportIndex passportinfo);
 
-        Task<PassportInfoResponse> UpdateAsync(int id, PassportInfo passportinfo);
+        Task<PassportInfoResponse> UpdateAsync(int id, PassportIndex passportinfo);
 
         Task<PassportInfoResponse> DeleteAsync(int id);
 
-        Task<PassportInfo> GetBySourceAndDestination(string sourceCountry, string destinationCountry);
+        Task<PassportIndex> GetBySourceAndDestination(string sourceCountry, string destinationCountry);
 
-        Task<IEnumerable<PassportInfo>> GetBySingleCountry(string country);
+        Task<IEnumerable<PassportIndex>> GetBySingleCountry(string country);
+
+        Task<IEnumerable<PassportIndex>> GetByCountryAndCode(string country, int code);
     }
 }

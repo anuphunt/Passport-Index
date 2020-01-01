@@ -18,24 +18,24 @@ namespace passportapi.Services
             _passportInfoRepository = passportInfoRepository;
             _unitOfWork = unitOfWork;
         }
-        public async Task<IEnumerable<PassportInfo>> ListAsync()
+        public async Task<IEnumerable<PassportIndex>> ListAsync()
         {
             return await _passportInfoRepository.ListAsync();
         }
 
-        public async Task<PassportInfo> FindByIdAsync(int id)
+        public async Task<PassportIndex> FindByIdAsync(int id)
         {
             return await _passportInfoRepository.FindByIdAsync(id);
         }
 
-        public async Task<PassportInfoResponse> SaveAsync(PassportInfo passportInfo)
+        public async Task<PassportInfoResponse> SaveAsync(PassportIndex passportIndex)
         {
             try
             {
-                await _passportInfoRepository.AddAsync(passportInfo);
+                await _passportInfoRepository.AddAsync(passportIndex);
                 await _unitOfWork.CompleteAsync();
 
-                return new PassportInfoResponse(passportInfo);
+                return new PassportInfoResponse(passportIndex);
             }
             catch (Exception ex)
             {
@@ -43,7 +43,7 @@ namespace passportapi.Services
             }
         }
 
-        public async Task<PassportInfoResponse> UpdateAsync(int id, PassportInfo passportInfo)
+        public async Task<PassportInfoResponse> UpdateAsync(int id, PassportIndex passportIndex)
         {
             var existingInfo = await _passportInfoRepository.FindByIdAsync(id);
 
@@ -51,15 +51,15 @@ namespace passportapi.Services
             {
                 return new PassportInfoResponse("Passport info not found.");
             }
-            existingInfo.Passport = passportInfo.Passport;
-            existingInfo.Destination = passportInfo.Destination;
-            existingInfo.Value = passportInfo.Value;
+            existingInfo.Passport = passportIndex.Passport;
+            existingInfo.Destination = passportIndex.Destination;
+            existingInfo.Code = passportIndex.Code;
 
             try
             {
                 _passportInfoRepository.Update(existingInfo);
                 await _unitOfWork.CompleteAsync();
-                return new PassportInfoResponse(passportInfo);
+                return new PassportInfoResponse(passportIndex);
             }
 
             catch (Exception ex)
@@ -88,14 +88,19 @@ namespace passportapi.Services
             }
         }
 
-        public async Task<PassportInfo> GetBySourceAndDestination(string sourceCountry, string destinationCountry)
+        public async Task<PassportIndex> GetBySourceAndDestination(string sourceCountry, string destinationCountry)
         {
             return await _passportInfoRepository.GetBySourceAndDestination(sourceCountry, destinationCountry);
         }
 
-        public async Task<IEnumerable<PassportInfo>> GetBySingleCountry(string country)
+        public async Task<IEnumerable<PassportIndex>> GetBySingleCountry(string country)
         {
             return await _passportInfoRepository.GetBySingleCountry(country);
+        }
+
+        public async Task<IEnumerable<PassportIndex>> GetByCountryAndCode(string country, int code)
+        {
+            return await _passportInfoRepository.GetByCountryAndCode(country, code);
         }
     }
 }

@@ -12,9 +12,7 @@ namespace passportapi.Mapping
     {
         public ResourceToModelProfile()
         {
-            CreateMap<SavePassportInfoResource, PassportInfo>()
-                .ForMember(d => d.Value, opt => opt
-                .MapFrom(s => Enum.Parse(typeof(Enumerations), s.visaStatus)));
+            CreateMap<SavePassportInfoResource, PassportIndex>();
         }
     }
 }

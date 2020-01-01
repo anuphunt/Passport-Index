@@ -17,6 +17,6 @@ namespace passportapi.Resources
         public string Destination { get; set; }
 
         [Required]
-        public string visaStatus { get; set; }
+        public int Code { get; set; }
     }
 }

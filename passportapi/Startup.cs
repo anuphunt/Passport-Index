@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using passportapi.Domain.Models;
 using passportapi.Domain.Repository;
 using passportapi.Domain.Services;
@@ -22,49 +23,37 @@ namespace passportapi
         }
 
         public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
+        
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            //configure database
-            services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("dataset")));
+            services.AddDbContext<PassportContext>(options =>
+                options.UseSqlite("Data Source = PassportIndex.db"));
 
             services.AddScoped<IPassportInfoRepository, PassportInfoRepository>();
             services.AddScoped<IPassportInfoService, PassportInfoService>();
             services.AddScoped<IUnitofWork, UnitOfWork>();
             services.AddAutoMapper(typeof(Startup));
+            services.AddControllers();
 
 
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
 
             app.UseHttpsRedirection();
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action}/{id?}");
 
-                routes.MapRoute(
-                    name: "twoCountries",
-                    template: "{controller}/{action}/{source}/{destination}");
-            });
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

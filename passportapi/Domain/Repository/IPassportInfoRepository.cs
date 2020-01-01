@@ -8,12 +8,13 @@ namespace passportapi.Domain.Repository
 {
     public interface IPassportInfoRepository
     {
-        Task<IEnumerable<PassportInfo>> ListAsync();
-        Task AddAsync(PassportInfo passportinfo);
-        Task<PassportInfo> FindByIdAsync(int id);
-        void Update(PassportInfo passportInfo);
-        void Remove(PassportInfo passportInfo);
-        Task<PassportInfo> GetBySourceAndDestination(string source, string destination);
-        Task<IEnumerable<PassportInfo>> GetBySingleCountry(string country);
+        Task<IEnumerable<PassportIndex>> ListAsync();
+        Task AddAsync(PassportIndex passportinfo);
+        Task<PassportIndex> FindByIdAsync(int id);
+        void Update(PassportIndex passportIndex);
+        void Remove(PassportIndex passportIndex);
+        Task<PassportIndex> GetBySourceAndDestination(string source, string destination);
+        Task<IEnumerable<PassportIndex>> GetBySingleCountry(string country);
+        Task<IEnumerable<PassportIndex>> GetByCountryAndCode(string countr, int code);
     }
 }

@@ -8,9 +8,9 @@ namespace passportapi.Persistance.Repositories
 {
     public abstract class BaseRepository
     {
-        protected readonly AppDbContext _context;
+        protected readonly PassportContext _context;
 
-        public BaseRepository(AppDbContext context)
+        public BaseRepository(PassportContext context)
         {
             _context = context;
         }

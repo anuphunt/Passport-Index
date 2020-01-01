@@ -9,9 +9,9 @@ namespace passportapi.Persistance.Repositories
 {
     public class UnitOfWork : IUnitofWork
     {
-        private readonly AppDbContext _context; 
+        private readonly PassportContext _context; 
                 
-        public UnitOfWork(AppDbContext context)
+        public UnitOfWork(PassportContext context)
         {
             _context = context;
         }
